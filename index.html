@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Review Hub</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header>
+        <h1>📚 Book Review Hub</h1>
+        <p>Your place to create, view, and manage book reviews.</p>
+    </header>
+
+    <section id="create-section">
+        <h2>Create a Book Review</h2>
+
+        <input type="text" id="titleInput" placeholder="Book Title">
+        <input type="text" id="authorInput" placeholder="Author">
+        <textarea id="reviewInput" placeholder="Write your review"></textarea>
+
+        <button onclick="addReview()">Add Review</button>
+    </section>
+
+    <section id="list-section">
+        <h2>All Book Reviews</h2>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Author</th>
+                    <th>Review</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+
+            <tbody id="reviewTableBody">
+                <!-- Items will appear here dynamically -->
+            </tbody>
+        </table>
+    </section>
+
+    <script src="script.js"></script>
+</body>
+</html>
