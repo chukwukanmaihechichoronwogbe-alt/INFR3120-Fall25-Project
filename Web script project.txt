@@ -34,7 +34,7 @@ Member 3 – Logic, GitHub, and Deployment Manager
 
 GitHub Repository
 Public repository name: INFR3120 Fall25 Project
- Repository link:
+ Repository link:https://github.com/chukwukanmaihechichoronwogbe-alt/INFR3120-Fall25-Project
 Each group member will:
    * Clone or access the repository
 
@@ -52,5 +52,6 @@ The deployed version of the site includes:
       * A hero button to create a new book review
 
       * A table listing existing reviews
+
 
       * Full CRUD operations (Create, Read, Update, Delete) using front-end JavaScript and localStorage.
