@@ -63,3 +63,17 @@ th, td {
 th {
     background-color: #e3e9ff;
 }
+
+.team-logo {
+    display: inline-block;
+    padding: 8px 18px;
+    background: linear-gradient(135deg, #1e3c72, #2a5298);
+    color: #fff;
+    font-weight: 700;
+    font-size: 1.1rem;
+    border-radius: 12px;
+    letter-spacing: 1px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    margin-top: 12px;
+    margin-bottom: 12px;
+}
