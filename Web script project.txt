@@ -1,0 +1,56 @@
+﻿INFR3120 – Web and Scripting Programming
+Project Part 1 – First Release
+Project Title: Book Review Web Application
+Group Members:
+* Member 1: Chukwukanma nwogbe - 100946744
+
+* Member 2: Houreen raja - 100975534
+
+* Member 3: Ahmed Desai -100828524
+
+Date: 14th November 2025
+
+
+Book review site 
+Our team has decided to create a Book Review Web Application as a part of our Project Part 1. With this application, one is able to browse books, read other user reviews and also post their reviews. This project is undertaken to exercise the construction of working web interfaces and application of fundamental CRUD operations that are representative of Web application architecture. The opening page will contain the title of our web site, a basic custom team logo, and a plain design, which will guide them to start using the site.
+
+
+The program will enable users to make new book reviews by adding a book title, author, rating, and review. These reviews will be presented in a table or dashboard form in the landing page and the reviews that are already available will be easily seen. The site will also have full CRUD capability such that the user can not only create a review, he can see all the reviews, edit and/or remove the review all together. This initial release will use front-end JavaScript logic or browser local storage as the data store. The version is more functional than stylish; subsequent versions will enhance form and style. Compared to the class project and Assignment 03, the project is more specific in terms of its review of book reviews provided by users and communication with the reader.
+
+
+In this first release, every group member is to make an equal contribution. To be credited, every member should write and save his/her code in GitHub with a personal account. The current release forms the basis of our Book Review Site as it illustrates the entry level site structure, operational screens, CRUD activities and deployment on a cloud platform. Subsequent releases will increase functionality, database integration and User interface.
+
+
+ 
+Group Roles & Responsibilities – 
+Chukwukanma Nwogbe  (Front-End Lead): chukwukanma is responsible for creating the Landing Page, adding the project name, and designing a simple custom team logo. He will build the “Create Review” interface, including the form where users input the book title, author, rating, and review text. He will ensure that form data is properly sent to the JavaScript logic to create new review entries and that the landing page contains a clear hero button or link allowing users to create a new book review.
+
+Member 2 – Review Display & CRUD Developer
+ This group member is responsible for creating the “View All Reviews” section. They will build the table/dashboard that lists all reviews and make sure it updates when new reviews are added. They will also help implement the update and delete functions so users can modify or remove existing reviews.
+
+Member 3 – Logic, GitHub, and Deployment Manager
+ This member will develop the JavaScript logic that stores reviews using arrays or localStorage. They will implement the update and delete methods to complete full CRUD functionality. Additionally, they will create the public GitHub repository named “INFR3120 Fall25 Project,” add the group members as collaborators, upload the Word document, and deploy the website using a cloud hosting provider such as Netlify or Verce
+
+
+GitHub Repository
+Public repository name: INFR3120 Fall25 Project
+ Repository link:
+Each group member will:
+   * Clone or access the repository
+
+   * Work on their assigned parts
+
+   * Commit and push their own changes from their personal GitHub accounts
+
+   * Include meaningful commit messages (e.g., “Add review form”, “Implement delete review logic”).
+Deployment
+Cloud provider used: [Netlify]
+ Deployment link: https://gilded-alfajores-65895c.netlify.app/
+The deployed version of the site includes:
+      * Landing page with project name and team logo
+
+      * A hero button to create a new book review
+
+      * A table listing existing reviews
+
+      * Full CRUD operations (Create, Read, Update, Delete) using front-end JavaScript and localStorage.
