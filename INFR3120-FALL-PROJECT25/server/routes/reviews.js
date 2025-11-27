@@ -1,136 +1,118 @@
 // server/routes/reviews.js
 const express = require('express');
 const router = express.Router();
+const createError = require('http-errors');
 const Review = require('../models/review');
 
-// LIST all reviews
-router.get('/', async (req, res) => {
+function requireAuth(req, res, next) {
+    if (!req.isAuthenticated || !req.isAuthenticated()) {
+    req.flash('error', 'You must be logged in to perform that action.');
+    return res.redirect('/auth/login');
+    }
+    next();
+}
+
+// ─── LIST all reviews ─────────────────────────────────────────
+router.get('/', async (req, res, next) => {
     try {
     const reviews = await Review.find().sort({ createdAt: -1 });
     res.render('Reviews/list', {
         title: 'All Reviews',
-        reviews
+        reviews,
     });
     } catch (err) {
     console.error(err);
-    res.status(500).render('Reviews/error', {
-        title: 'Error',
-        message: 'Error fetching reviews.'
-    });
+    next(err); // let global error handler render error.ejs
     }
 });
 
-// CREATE form
-router.get('/add', (req, res) => {
+router.get('/add', requireAuth, (req, res) => {
     res.render('Reviews/add', {
-    title: 'Add New Review',
-    review: {}
+    title: 'Add Review',
     });
 });
 
-// CREATE submit
-router.post('/add', async function(req, res, next) {
+router.post('/add', requireAuth, async (req, res, next) => {
     try {
-        let newReview = new Review({
-            title: req.body.title,
-            author: req.body.author,
-            rating: req.body.rating,
-            reviewText: req.body.reviewText,
-            dateRead: req.body.dateRead || null
-        });
+    const { title, author, rating, reviewText, dateRead } = req.body;
 
-        await Review.create(newReview);
-        res.redirect('/reviews');
-    } catch (err) {
-        console.error(err);
-        next(err);
-    }
-});
-
-
-// DETAIL page
-router.get('/:id', async (req, res) => {
-    try {
-    const review = await Review.findById(req.params.id);
-    if (!review) {
-        return res.status(404).render('Reviews/error', {
-        title: 'Not Found',
-        message: 'Review not found.'
-        });
-    }
-
-    res.render('Reviews/edit', {
-        title: `View / Edit: ${review.title}`,
-        review,
-        readonly: true
+    await Review.create({
+        title,
+        author,
+        rating,
+        reviewText,
+        dateRead: dateRead ? new Date(dateRead) : undefined,
     });
-    } catch (err) {
-    console.error(err);
-    res.status(500).render('Reviews/error', {
-        title: 'Error',
-        message: 'Error loading review details.'
-    });
-    }
-});
 
-// EDIT form
-router.get('/:id/edit', async (req, res) => {
-    try {
-    const review = await Review.findById(req.params.id);
-    if (!review) {
-        return res.status(404).render('Reviews/error', {
-        title: 'Not Found',
-        message: 'Review not found.'
-        });
-    }
-
-    res.render('Reviews/edit', {
-        title: `Edit: ${review.title}`,
-        review,
-        readonly: false
-    });
-    } catch (err) {
-    console.error(err);
-    res.status(500).render('Reviews/error', {
-        title: 'Error',
-        message: 'Error loading edit form.'
-    });
-    }
-});
-
-// EDIT submit
-router.post('/:id/edit', async function(req, res, next) {
-    try {
-        let updatedReview = {
-            title: req.body.title,
-            author: req.body.author,
-            rating: req.body.rating,
-            reviewText: req.body.reviewText,
-            dateRead: req.body.dateRead || null
-        };
-
-        await Review.findByIdAndUpdate(req.params.id, updatedReview);
-
-        res.redirect('/reviews');
-    } catch (err) {
-        console.error(err);
-        next(err);
-    }
-});
-
-
-// DELETE
-// server/routes/reviews.js
-router.post('/:id/delete', async (req, res, next) => {
-    try {
-    await Review.findByIdAndDelete(req.params.id);
+    req.flash('success', 'Review added successfully.');
     res.redirect('/reviews');
     } catch (err) {
     console.error(err);
-    res.status(500).render('partials/error', {
-        title: 'Error',
-        message: 'Error deleting review.'
+    next(err);
+    }
+});
+
+
+router.get('/:id/edit', requireAuth, async (req, res, next) => {
+    try {
+    const review = await Review.findById(req.params.id);
+
+    if (!review) {
+        return next(createError(404, 'Review not found'));
+    }
+
+    res.render('Reviews/edit', {
+        title: 'Edit Review',
+        review,
     });
+    } catch (err) {
+    console.error(err);
+    next(err);
+    }
+});
+
+router.post('/:id/edit', requireAuth, async (req, res, next) => {
+    try {
+    const { title, author, rating, reviewText, dateRead } = req.body;
+
+    const review = await Review.findByIdAndUpdate(
+        req.params.id,
+        {
+        title,
+        author,
+        rating,
+        reviewText,
+        dateRead: dateRead ? new Date(dateRead) : undefined,
+        },
+        { new: true, runValidators: true }
+    );
+
+    if (!review) {
+        return next(createError(404, 'Review not found'));
+    }
+
+    req.flash('success', 'Review updated successfully.');
+    res.redirect('/reviews');
+    } catch (err) {
+    console.error(err);
+    next(err);
+    }
+});
+
+
+router.post('/:id/delete', requireAuth, async (req, res, next) => {
+    try {
+    const deleted = await Review.findByIdAndDelete(req.params.id);
+
+    if (!deleted) {
+        return next(createError(404, 'Review not found'));
+    }
+
+    req.flash('success', 'Review deleted successfully.');
+    res.redirect('/reviews');
+    } catch (err) {
+    console.error(err);
+    next(err);
     }
 });
 

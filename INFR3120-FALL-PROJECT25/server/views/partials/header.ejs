@@ -4,10 +4,8 @@
     <meta charset="UTF-8" />
     <title><%= title %></title>
     <link rel="stylesheet" href="/content/app.css" />
-
     <link rel="stylesheet" href="/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="/@fortawesome/fontawesome-free/css/all.min.css">
-
     <script src="/jquery/dist/jquery.min.js"></script>
     <script src="/bootstrap/dist/js/bootstrap.min.js"></script>
 </head>
@@ -18,11 +16,16 @@
             <img src="/content/Logo.png" alt="PageTurners Logo" class="logo" />
             <h1>PageTurners - Book Review Hub</h1>
         </div>
-
         <nav class="main-nav">
             <a href="/">Home</a>
             <a href="/reviews">All Reviews</a>
-            <a href="/reviews/add" class="btn-primary">Add New Review</a>
+            <% if (currentUser) { %>
+                <a href="/reviews/add" class="btn-primary">Add New Review</a>
+                <a href="/auth/logout">Logout (<%= currentUser.username %>)</a>
+            <% } else { %>
+                <a href="/auth/login">Login</a>
+                <a href="/auth/register">Register</a>
+            <% } %>
         </nav>
     </header>
     <main class="container main-content">
