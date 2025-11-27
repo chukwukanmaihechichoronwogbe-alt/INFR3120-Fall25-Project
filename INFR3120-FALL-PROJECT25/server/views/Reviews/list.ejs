@@ -1,0 +1,42 @@
+<%- include('../partials/header') %>
+
+<h2>All Book Reviews</h2>
+
+<a href="/reviews/add" class="btn-primary">Add New Review</a>
+
+<% if (reviews && reviews.length > 0) { %>
+    <table class="data-table">
+    <thead>
+        <tr>
+        <th>Title</th>
+        <th>Author</th>
+        <th>Rating</th>
+        <th>Date Read</th>
+        <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% reviews.forEach(function(review) { %>
+        <tr>
+            <td><%= review.title %></td>
+            <td><%= review.author %></td>
+            <td><%= review.rating %>/5</td>
+            <td><%= review.dateRead ? review.dateRead.toDateString() : 'N/A' %></td>
+            <td>
+                <a href="/reviews/<%= review._id %>/edit" class="btn btn-primary btn-sm">Edit</a>
+                |
+                <form action="/reviews/<%= review._id %>/delete"
+                        method="POST"
+                        style="display:inline;">
+                    <button type="submit" class="btn btn-secondary btn-sm">Delete</button>
+                </form>
+            </td>
+        </tr>
+        <% }) %>
+    </tbody>
+    </table>
+<% } else { %>
+    <p>No reviews found.</p>
+<% } %>
+
+<%- include('../partials/footer') %>

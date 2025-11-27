@@ -1,0 +1,24 @@
+<%- include('../partials/header') %>
+
+<h2>Add New Review</h2>
+
+<form action="/reviews/add" method="POST" class="form-card">
+    <label>Book Title</label>
+    <input type="text" name="title" required />
+
+    <label>Author</label>
+    <input type="text" name="author" required />
+
+    <label>Rating (1-5)</label>
+    <input type="number" name="rating" min="1" max="5" required />
+
+    <label>Date Read</label>
+    <input type="date" name="dateRead" />
+
+    <label>Review</label>
+    <textarea name="reviewText" rows="5"></textarea>
+
+    <button type="submit" class="btn-primary">Create Review</button>
+</form>
+
+<%- include('../partials/footer') %>

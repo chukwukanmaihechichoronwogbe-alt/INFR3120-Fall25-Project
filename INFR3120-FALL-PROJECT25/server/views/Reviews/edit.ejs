@@ -1,0 +1,28 @@
+<%- include('../partials/header') %>
+
+<h2>Edit Review</h2>
+
+<form action="/reviews/edit/<%= review._id %>" method="POST" class="form-card">
+    <label>Book Title</label>
+    <input type="text" name="title" value="<%= review.title %>" required />
+
+    <label>Author</label>
+    <input type="text" name="author" value="<%= review.author %>" required />
+
+    <label>Rating (1-5)</label>
+    <input type="number" name="rating" min="1" max="5" value="<%= review.rating %>" required />
+
+    <label>Date Read</label>
+    <input
+        type="date"
+        name="dateRead"
+        value="<%= review.dateRead ? review.dateRead.toISOString().slice(0,10) : '' %>"
+    />
+
+    <label>Review</label>
+    <textarea name="reviewText" rows="5"><%= review.reviewText %></textarea>
+
+    <button type="submit" class="btn btn-primary">Save Changes</button>
+</form>
+
+<%- include('../partials/footer') %>
