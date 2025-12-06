@@ -1,9 +1,5 @@
 <%- include('../partials/header') %>
 
-<h2>All Book Reviews</h2>
-
-<a href="/reviews/add" class="btn-primary">Add New Review</a>
-
 <% if (reviews && reviews.length > 0) { %>
     <table class="data-table">
     <thead>
@@ -28,7 +24,7 @@
                 <form action="/reviews/<%= review._id %>/delete"
                         method="POST"
                         style="display:inline;">
-                    <button type="submit" class="btn btn-secondary btn-sm">Delete</button>
+                    <button type="delete" class="btn btn-danger btn-sm">Delete</button>
                 </form>
             </td>
         </tr>
@@ -36,7 +32,10 @@
     </tbody>
     </table>
 <% } else { %>
-    <p>No reviews found.</p>
+    <div class="empty-state text-center py-5">
+    <p class="lead text-muted mb-3">No reviews found.</p>
+    <a href="/reviews/add" class="btn btn-primary btn-lg">Add New Review!</a>
+    </div>
 <% } %>
 
 <%- include('../partials/footer') %>

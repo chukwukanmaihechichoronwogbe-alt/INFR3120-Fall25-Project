@@ -1,48 +1,70 @@
 <%- include('partials/header') %>
+  <!-- Hero section -->
+  <section class="hero-section">
+    <div class="container py-5">
+      <div class="row align-items-center">
+        <div class="col-md-7">
+          <h1 class="display-4 fw-bold mb-3">
+            Track Your Reading. <span class="text-primary">Share Your Thoughts.</span>
+          </h1>
+          <p class="lead text-muted mb-4">
+            PageTurners helps you keep a beautiful record of everything you read – ratings, notes,
+            and thoughts, all in one place.
+          </p>
 
-<section class="hero">
-  <h2>Track Your Reading. Share Your Thoughts.</h2>
-  <p>Welcome to PageTurners — store ratings & reviews for all your books.</p>
-  <a href="/reviews/add" class="btn btn-primary">Create a New Review</a>
-</section>
+          <div class="d-flex flex-wrap gap-3 mb-4">
+            <a href="/reviews/add" class="btn btn-primary btn-lg">
+              Create a New Review
+            </a>
+            <a href="/reviews" class="btn btn-outline-dark btn-lg">
+              Browse All Reviews
+            </a>
+          </div>
 
-<section class="table-section">
-  <h3>Latest Reviews</h3>
+          <div class="d-flex flex-column flex-sm-row gap-3 small text-muted">
+            <div class="d-flex align-items-center gap-2">
+              <i class="fa-solid fa-book-open"></i>
+              <span>Build your personal reading history.</span>
+            </div>
+            <div class="d-flex align-items-center gap-2">
+              <i class="fa-solid fa-star-half-stroke"></i>
+              <span>Rate and compare your favourites.</span>
+            </div>
+          </div>
+        </div>
 
-  <% if (reviews && reviews.length > 0) { %>
-    <table class="data-table">
-      <thead>
-        <tr>
-          <th>Title</th>
-          <th>Author</th>
-          <th>Rating</th>
-          <th>Date Read</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% reviews.forEach(function(review) { %>
-          <tr>
-            <td><%= review.title %></td>
-            <td><%= review.author %></td>
-            <td><%= review.rating %>/5</td>
-            <td><%= review.dateRead ? review.dateRead.toDateString() : 'N/A' %></td>
-            <td>
-                <a href="/reviews/<%= review._id %>/edit" class="btn btn-primary btn-sm">Edit</a>
-                |
-                <form action="/reviews/<%= review._id %>/delete"
-                      method="POST"
-                      style="display:inline;">
-                  <button type="submit" class="btn btn-secondary btn-sm">Delete</button>
-                </form>
-            </td>
-          </tr>
-        <% }) %>
-      </tbody>
-    </table>
-  <% } else { %>
-    <p>No reviews yet. Add one!</p>
-  <% } %>
-</section>
+        <!-- Right side: Latest Reviews inside card -->
+        <div class="col-md-5 d-none d-md-block">
+          <div class="hero-card shadow-lg bg-white p-4">
+            <h5 class="mb-3">Latest Reviews</h5>
+
+            <% if (reviews && reviews.length) { %>
+              <% reviews.slice(0, 3).forEach(review => { %>
+                <div class="mb-3 pb-3 border-bottom">
+                  <h6 class="fw-bold mb-1"><%= review.title %></h6>
+                  <p class="text-muted small mb-1">
+                    by <%= review.author %>
+                  </p>
+                  <p class="small text-muted mb-2"> <%= review.rating %>/5</p>
+
+                  <p class="small text-muted mb-1">
+                    <%= review.reviewText ? review.reviewText.substring(0, 90) : '' %>
+                    <% if (review.reviewText && review.reviewText.length > 90) { %>…<% } %>
+                  </p>
+                </div>
+              <% }) %>
+
+              <div class="text-end">
+                <a href="/reviews" class="btn btn-outline-primary btn-sm">View All</a>
+              </div>
+
+            <% } else { %>
+              <p class="text-muted">No reviews yet. Add one!</p>
+              <a href="/reviews/add" class="btn btn-primary w-100">Create a Review</a>
+            <% } %>
+          </div>
+        </div>
+      </div>
+    </div>
 
 <%- include('partials/footer') %>
