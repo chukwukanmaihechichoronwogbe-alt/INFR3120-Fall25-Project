@@ -2,7 +2,7 @@
 
 <h2>Edit Review</h2>
 
-<form action="/reviews/edit/<%= review._id %>" method="POST" class="form-card">
+<form action="/reviews/<%= review._id %>/edit" method="POST" class="form-card">
     <label>Book Title</label>
     <input type="text" name="title" value="<%= review.title %>" required />
 

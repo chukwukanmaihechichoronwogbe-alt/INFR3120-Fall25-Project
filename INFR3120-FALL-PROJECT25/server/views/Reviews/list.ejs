@@ -1,40 +1,61 @@
 <%- include('../partials/header') %>
+<section class="mt-4 mb-3 d-flex justify-content-between align-items-center">
+    <div>
+    <h1 class="display-6 fw-bold mb-1">All Book Reviews</h1>
+    <p class="text-muted mb-0">Browse and manage all the books you've reviewed.</p>
+    </div>
+    <a href="/reviews/add" class="btn btn-primary btn-lg">
+    Add New Review
+    </a>
+</section>
 
-<% if (reviews && reviews.length > 0) { %>
-    <table class="data-table">
-    <thead>
-        <tr>
-        <th>Title</th>
-        <th>Author</th>
-        <th>Rating</th>
-        <th>Date Read</th>
-        <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-        <% reviews.forEach(function(review) { %>
-        <tr>
-            <td><%= review.title %></td>
-            <td><%= review.author %></td>
-            <td><%= review.rating %>/5</td>
-            <td><%= review.dateRead ? review.dateRead.toDateString() : 'N/A' %></td>
-            <td>
-                <a href="/reviews/<%= review._id %>/edit" class="btn btn-primary btn-sm">Edit</a>
-                |
-                <form action="/reviews/<%= review._id %>/delete"
-                        method="POST"
-                        style="display:inline;">
-                    <button type="delete" class="btn btn-danger btn-sm">Delete</button>
+<% if (reviews && reviews.length) { %>
+    <div class="row g-4 mb-5">
+    <% reviews.forEach(review => { %>
+        <div class="col-md-6 col-lg-4">
+        <div class="card review-card h-100 shadow-lg border-0">
+            <div class="card-body d-flex flex-column">
+            <h5 class="card-title mb-1"><%= review.title %></h5>
+            <p class="text-muted small mb-2">
+                by <%= review.author %>
+            </p>
+            <p class="small text-muted mb-2">
+                <%= review.rating %>/5
+            </p>
+            <p class="card-text text-muted small flex-grow-1">
+                <%= review.reviewText %>
+            </p>
+            <div class="d-flex justify-content-between align-items-center mt-3">
+                <% if (review.dateRead) { %>
+                <span class="badge bg-light text-muted small">
+                    Read on <%= review.dateRead.toLocaleDateString('en-CA') %>
+                </span>
+                <% } else { %>
+                <span class="badge bg-light text-muted small">
+                    Date not set
+                </span>
+                <% } %>
+                <div class="btn-group btn-group-sm">
+                <a href="/reviews/<%= review._id %>/edit" class="btn btn-outline-primary">
+                    Edit
+                </a>
+                <form action="/reviews/<%= review._id %>/delete" method="POST" class="d-inline">
+                    <button type="danger" class="btn btn-outline-danger"
+                            onclick="return confirm('Delete this review?');">
+                    Delete
+                    </button>
                 </form>
-            </td>
-        </tr>
-        <% }) %>
-    </tbody>
-    </table>
+                </div>
+            </div>
+            </div>
+        </div>
+        </div>
+    <% }) %>
+    </div>
 <% } else { %>
     <div class="empty-state text-center py-5">
     <p class="lead text-muted mb-3">No reviews found.</p>
-    <a href="/reviews/add" class="btn btn-primary btn-lg">Add New Review!</a>
+    <a href="/reviews/add" class="btn btn-primary btn-lg">Add New</a>
     </div>
 <% } %>
 
